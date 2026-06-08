@@ -1,0 +1,297 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simply Crochet | Handmade with Love</title>
+    <style>
+        /* Modern, Cozy E-Commerce Styling */
+        :root {
+            --bg-color: #FAF6F0;
+            --primary-brown: #4A3E3D;
+            --beige-accent: #E6D5C3;
+            --sage-green: #8F9E8B;
+            --sage-hover: #768572;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--primary-brown);
+        }
+
+        /* Top Navigation Bar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--white);
+            padding: 15px 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* The 3 Lines Menu (Hamburger Menu) */
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 24px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .menu-icon span {
+            width: 24px;
+            height: 2px;
+            background-color: var(--primary-brown);
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .cart-icon {
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        /* Hidden Side Drawer for Menu */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: var(--white);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: 0.3s ease;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            z-index: 101;
+        }
+
+        .side-menu a {
+            display: block;
+            padding: 15px 10px;
+            color: var(--primary-brown);
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        /* Hero Banner Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(180deg, #F1E9DB 0%, #FAF6F0 100%);
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background-color: var(--sage-green);
+            color: var(--white);
+            padding: 12px 28px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 15px;
+            transition: 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--sage-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* Product Grid (Catalog) */
+        .catalog {
+            max-width: 1100px;
+            margin: 20px auto 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.03);
+            text-align: center;
+            padding-bottom: 25px;
+            transition: 0.3s ease;
+            border: 1px solid #F0EAE1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        }
+
+        .product-image-box {
+            background-color: #E6D5C3;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6E5A59;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .product-card h3 {
+            font-size: 1.2rem;
+            margin: 15px 0 5px 0;
+        }
+
+        .price {
+            font-weight: bold;
+            color: var(--sage-green);
+            font-size: 1.3rem;
+            margin: 5px 0 15px 0;
+        }
+
+        /* Dark overlay when menu is open */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 50;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay back shadow -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <button class="menu-icon" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="logo">simply crochet</div>
+        <div class="cart-icon">🛒</div>
+    </nav>
+
+    <!-- Side Slide-out Menu -->
+    <div class="side-menu" id="sideMenu">
+        <a href="#" onclick="toggleMenu()">❌ Close Menu</a>
+        <a href="#shop">Shop All</a>
+        <a href="#">Plushies</a>
+        <a href="#">Wearables</a>
+        <a href="#">Custom Orders</a>
+        <a href="#">Our Story</a>
+    </div>
+
+    <!-- Main Hero Banner -->
+    <section class="hero">
+        <h2>Consciously Crafted Yarn Goods</h2>
+        <p>Handmade warmth stitched into every single item.</p>
+        <a href="#shop" class="btn">Explore Collection</a>
+    </section>
+
+    <h2 class="section-title" id="shop">Our Creations</h2>
+
+    <!-- Expanded Product Catalog -->
+    <main class="catalog">
+        <!-- Product 1 -->
+        <div class="product-card">
+            <div class="product-image-box">[ Pastel Amigurumi Dino Photo ]</div>
+            <h3>Amigurumi Dinosaur</h3>
+            <p class="price">$25.00</p>
+            <button class="btn">Add to Cart</button>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+            <div class="product-image-box">[ Daisy Bucket Hat Photo ]</div>
+            <h3>Daisy Bucket Hat</h3>
+            <p class="price">$30.00</p>
+            <button class="btn">Add to Cart</button>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+            <div class="product-image-box">[ Boho Granny Square Tote Photo ]</div>
+            <h3>Granny Square Tote</h3>
+            <p class="price">$45.00</p>
+            <button class="btn">Add to Cart</button>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+            <div class="product-image-box">[ Strawberry Crochet Coaster Photo ]</div>
+            <h3>Strawberry Coaster Set</h3>
+            <p class="price">$15.00</p>
+            <button class="btn">Add to Cart</button>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+            <div class="product-image-box">[ Chunky Knit Cardigan Photo ]</div>
+            <h3>Chunky Statement Cardigan</h3>
+            <p class="price">$85.00</p>
+            <button class="btn">Add to Cart</button>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card">
+            <div class="product-image-box">[ Crochet Flower Bouquet Photo ]</div>
+            <h3>Forever Flower Bouquet</h3>
+            <p class="price">$40.00</p>
+            <button class="btn">Add to Cart</button>
+        </div>
+    </main>
+
+    <!-- JavaScript to make the 3 lines menu button slide open and close -->
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("sideMenu");
+            var overlay = document.getElementById("overlay");
+            if (menu.style.left === "0px") {
+                menu.style.left = "-250px";
+                overlay.style.display = "none";
+            } else {
+                menu.style.left = "0px";
+                overlay.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>
